@@ -8,6 +8,18 @@ namespace Homework06
         static void Main(string[] args)
         {
             var N = ReadN();
+            WriteGroups(N);
+
+
+        }
+        static int ReadN()
+        {
+            using var reader = new StreamReader("input.txt");
+            return Convert.ToInt32(reader.ReadLine());
+        }
+
+        static void WriteGroups(int N)
+        {
             for (var group = 1; ; group++)
             {
                 var start = Math.Pow(2, group - 1);
@@ -27,12 +39,6 @@ namespace Homework06
                     break;
                 }
             }
-            
-        }
-        static int ReadN()
-        {
-            using var reader = new StreamReader("input.txt");
-            return Convert.ToInt32(reader.ReadLine());
         }
     }
 }

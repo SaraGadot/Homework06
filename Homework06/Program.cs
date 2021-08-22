@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
 
 namespace Homework06
 {
@@ -9,7 +10,7 @@ namespace Homework06
         {
             var N = ReadN();
             WriteGroups(N);
-
+            CompressGroups();
 
         }
         static int ReadN()
@@ -20,6 +21,7 @@ namespace Homework06
 
         static void WriteGroups(int N)
         {
+            using var writer = new StreamWriter("output.txt");
             for (var group = 1; ; group++)
             {
                 var start = Math.Pow(2, group - 1);
@@ -28,18 +30,27 @@ namespace Homework06
                 {
                     end = N;
                 }
-                Console.Write($"Группа {group}:");
+                writer.Write($"Группа {group}:");
                 for (var i = start; i <= end; i++)
                 {
-                    Console.Write($" {i}");
+                    writer.Write($" {i}");
                 }
-                Console.WriteLine(".");
+                writer.WriteLine(".");
                 if (end == N)
                 {
                     break;
                 }
             }
         }
+        static void CompressGroups()
+        {
+            using var stream = new FileStream("output.txt.gz", FileMode.Create);
+            using var compressStream = new GZipStream(stream, CompressionMode.Compress);
+            using var writer = new StreamWriter(compressStream);
+            using var reader = new StreamReader("output.txt");
+            writer.Write(reader.ReadToEnd());
+        }
+
     }
 }
 //Что нужно сделать

@@ -11,6 +11,7 @@ namespace Homework06
             var N = ReadN();
             WriteGroups(N);
             CompressGroups();
+            DisplayLengths();
 
         }
         static int ReadN()
@@ -46,11 +47,17 @@ namespace Homework06
         {
             using var stream = new FileStream("output.txt.gz", FileMode.Create);
             using var compressStream = new GZipStream(stream, CompressionMode.Compress);
-            using var writer = new StreamWriter(compressStream);
-            using var reader = new StreamReader("output.txt");
-            writer.Write(reader.ReadToEnd());
+            using var sourceStream = new FileStream("output.txt", FileMode.Open);
+            sourceStream.CopyTo(compressStream);
         }
 
+        static void DisplayLengths()
+        {
+            var outputLength = new FileInfo("output.txt").Length;
+            var outputGzLength = new FileInfo("output.txt.gz").Length;
+            Console.WriteLine($"Размер файла до сжатия: {outputLength}");
+            Console.WriteLine($"Размер файла после сжатия: {outputGzLength}");
+        }
     }
 }
 //Что нужно сделать

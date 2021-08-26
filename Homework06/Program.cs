@@ -8,26 +8,33 @@ namespace Homework06
     {
         static void Main(string[] args)
         {
-            var N = ReadN();
-            Console.WriteLine($"N: {N}");
-            Console.WriteLine("Выберите вариант: ");
-            Console.WriteLine("1: посчитать количество групп");
-            Console.WriteLine("2: записать группы на диск");
-            if (Console.ReadLine() == "2")
+            try
             {
-                Console.WriteLine("Группы записываются на диск...");
-                WriteGroups(N);
-                Console.WriteLine("  группы записаны.");
-                Console.WriteLine("Сжать группы (введите 'да')?");
-                if (Console.ReadLine() == "да")
+                var N = ReadN();
+                Console.WriteLine($"N: {N}");
+                Console.WriteLine("Выберите вариант: ");
+                Console.WriteLine("1: посчитать количество групп");
+                Console.WriteLine("2: записать группы на диск");
+                if (Console.ReadLine() == "2")
                 {
-                    CompressGroups();
-                    DisplayLengths();
+                    Console.WriteLine("Группы записываются на диск...");
+                    WriteGroups(N);
+                    Console.WriteLine("  группы записаны.");
+                    Console.WriteLine("Сжать группы (введите 'да')?");
+                    if (Console.ReadLine() == "да")
+                    {
+                        CompressGroups();
+                        DisplayLengths();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Количество групп: {CalculateGroups(N)}");
                 }
             }
-            else
+            catch (Exception exc)
             {
-                Console.WriteLine($"Количество групп: {CalculateGroups(N)}");
+                Console.WriteLine($"Ошибка: {exc.Message}");
             }
            
 
@@ -35,7 +42,17 @@ namespace Homework06
         static int ReadN()
         {
             using var reader = new StreamReader("input.txt");
-            return Convert.ToInt32(reader.ReadLine());
+            var line = reader.ReadLine();
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                throw new Exception("N не задано");
+            }
+            var N = Convert.ToInt32(line);
+            if (N < 1 || 1_000_000_000 < N)
+            {
+                throw new Exception("N выходит за диапазон от 1 до 1_000_000_000");
+            }
+            return N;
         }
 
         

@@ -10,9 +10,6 @@ namespace Homework06
         {
             var N = ReadN();
             Console.WriteLine($"N: {N}");
-           
-            //CompressGroups();
-            //DisplayLengths();
             Console.WriteLine("Выберите вариант: ");
             Console.WriteLine("1: посчитать количество групп");
             Console.WriteLine("2: записать группы на диск");
@@ -21,6 +18,12 @@ namespace Homework06
                 Console.WriteLine("Группы записываются на диск...");
                 WriteGroups(N);
                 Console.WriteLine("  группы записаны.");
+                Console.WriteLine("Сжать группы (введите 'да')?");
+                if (Console.ReadLine() == "да")
+                {
+                    CompressGroups();
+                    DisplayLengths();
+                }
             }
             else
             {

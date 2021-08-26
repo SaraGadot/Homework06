@@ -9,9 +9,24 @@ namespace Homework06
         static void Main(string[] args)
         {
             var N = ReadN();
-            WriteGroups(N);
-            CompressGroups();
-            DisplayLengths();
+            Console.WriteLine($"N: {N}");
+           
+            //CompressGroups();
+            //DisplayLengths();
+            Console.WriteLine("Выберите вариант: ");
+            Console.WriteLine("1: посчитать количество групп");
+            Console.WriteLine("2: записать группы на диск");
+            if (Console.ReadLine() == "2")
+            {
+                Console.WriteLine("Группы записываются на диск...");
+                WriteGroups(N);
+                Console.WriteLine("  группы записаны.");
+            }
+            else
+            {
+                Console.WriteLine($"Количество групп: {CalculateGroups(N)}");
+            }
+           
 
         }
         static int ReadN()
@@ -20,6 +35,7 @@ namespace Homework06
             return Convert.ToInt32(reader.ReadLine());
         }
 
+        
         static void WriteGroups(int N)
         {
             using var writer = new StreamWriter("output.txt");
@@ -40,6 +56,17 @@ namespace Homework06
                 if (end == N)
                 {
                     break;
+                }
+            }
+        }
+        static int CalculateGroups(int N)
+        {
+            for (var group = 1; ; group++)
+            {
+                var end = Math.Pow(2, group) - 1;
+                if (end >= N)
+                {
+                    return group;
                 }
             }
         }
